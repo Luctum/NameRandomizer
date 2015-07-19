@@ -1,21 +1,23 @@
+require_relative './check'
+
 class Name
 
 public
 
   def initialize()
-    @vowel = ["A","E","I","O","U","Y"]
-    @consonant = ["B","C","D","F","G","H","J","K","L","M","N","P","Q","R","S","T","V","W","X","Z"]
+    @vowel = ["A","E","A","E","I","O","U","Y"]
+    @consonant = ["B","C","D","C","D","F","G","H","H","J","K","L","M","N","M","N","P","Q","R","S","S","T","V","W","X","Z"] #Some letter are double in order to have them more often than other...
     @name = Array.[]
   end
 
   # Takes a random vowel
   def randomVowel()
-    return @vowel[Random.rand(5)]
+      return @vowel[Random.rand(@vowel.length)]
   end
 
   # Takes a random consonant
   def randomConsonant()
-    return @consonant[Random.rand(19)]
+      return @consonant[Random.rand(@consonant.length)]
   end
 
   # Add a "A", "E" or "Y" if the name is a girl's name
@@ -46,7 +48,7 @@ public
     if count < 1 #The second letter can't be a consonant
       lettre = randomVowel()
     else #Don't allow the generator to do (really) weird names with sonority like "vb" or "wq" (already happened)
-        if last == "V" or last == "W"
+        if last == "V" or last == "W" or last == "X"
           lettre = randomVowel()
           countConsonant = 0
         else
@@ -73,6 +75,8 @@ public
           end
         end
      end
+     #Change the actual letter if necessary (WIP)
+      lettre = checkLetter(last,lettre)
      #Check the validity of the name BETA(WIP)
 
      #Add the selected letter to the name array
@@ -87,6 +91,13 @@ public
     return @name
   end #
 
+
+    def clean
+        #clean the name for a re-do
+        @name = nil
+        @name = Array.[]
+    end
+
 #END OF CLASS
 end
 
@@ -97,9 +108,16 @@ print "Is the name female ? (y = 1 / n = 0)"
 genre = gets.to_i
 
 name = Name.new()
-final = name.nameGeneration(genre, firstletter)
-final = final.join
-final = final.downcase
-final = final.capitalize
-print final
+
+continue = 1
+while continue == 1
+    final = name.nameGeneration(genre, firstletter)
+    name.clean
+    final = final.join
+    final = final.downcase
+    final = final.capitalize
+    puts "\n ["+final+"]"
+    puts "\n Continue ? (y = 1 / n = 0) \n"
+    continue = gets.to_i
+end
 
