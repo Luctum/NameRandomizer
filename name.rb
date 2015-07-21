@@ -12,12 +12,12 @@ public
 
   # Takes a random vowel
   def randomVowel()
-      return @vowel[Random.rand(@vowel.length)]
+      return @vowel[Random.rand(8)]
   end
 
   # Takes a random consonant
   def randomConsonant()
-      return @consonant[Random.rand(@consonant.length)]
+      return @consonant[Random.rand(26)]
   end
 
   # Add a "A", "E" or "Y" if the name is a girl's name
@@ -36,8 +36,8 @@ public
     end
   end
 
-  # Generate a random name
-  def nameGeneration(genre, firstletter)
+
+    def nameGeneration(genre, firstletter) #Generate the name
     @name << firstletter
     count = 0
     last = @name.last
@@ -47,40 +47,35 @@ public
     nameLength.times do
     if count < 1 #The second letter can't be a consonant
       lettre = randomVowel()
-    else #Don't allow the generator to do (really) weird names with sonority like "vb" or "wq" (already happened)
-        if last == "V" or last == "W" or last == "X"
-          lettre = randomVowel()
-          countConsonant = 0
+    elsif count == 4
+        if Random.rand(3) == 3
+            lettre = "'"
         else
-          if last == "Q"
-            rand = Random.rand(5)
-            if rand >= 2
-              lettre = "U"
-            else
-              lettre = randomVowel()
-            end
-          end
-          if countConsonant >= 2 #Can't generate more than 2 consonant next to each other in order to not have string like "fckdbbq"
+            lettre = randomVowel()
+        end
+    else#Don't allow the generator to do (really) weird names with sonority like "vb" or "wq" (already happened)
+          if countConsonant >= 2 #Can't generate automatically more than 2 consonant next to each other in order to not have string like "fckdbbq" (this may change)
             lettre = randomVowel()
             countConsonant = 0
           else
-            rand = Random.rand(3) #There is more chance to have a vowel picked than a consonant (Needs some balance)
+            rand = Random.rand(2) #There is more chance to have a vowel picked than a consonant (Needs some balance)
             if rand <= 1
-              lettre = randomConsonant()
-              countConsonant = countConsonant + 1
+                lettre = randomConsonant()
+                countConsonant = countConsonant + 1
             else
-              lettre = randomVowel()
-              countConsonant = 0
+                lettre = randomVowel()
+                countConsonant = 0
             end
           end
-        end
      end
      #Change the actual letter if necessary (WIP)
       lettre = checkLetter(last,lettre)
+
      #Check the validity of the name BETA(WIP)
 
      #Add the selected letter to the name array
       @name << lettre
+      beforeLast = last
       last = lettre
 
       #Count the name of letter generated
@@ -89,8 +84,7 @@ public
 
     genreLetter(genre)
     return @name
-  end #
-
+    end #
 
     def clean
         #clean the name for a re-do
