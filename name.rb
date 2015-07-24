@@ -1,5 +1,3 @@
-require_relative './check'
-
 class Name
 
 public
@@ -36,8 +34,7 @@ public
     end
   end
 
-
-    def nameGeneration(genre, firstletter) #Generate the name
+  def nameGeneration(genre, firstletter) #Generate the name
     @name << firstletter
     count = 0
     last = @name.last
@@ -94,24 +91,25 @@ public
 
 #END OF CLASS
 end
+    def display
+        #Beta / DEGEULASSE
+        print "Choose the first letter of the generated name"
+        firstletter = gets.chomp
+        print "Is the name female ? (y = 1 / n = 0)"
+        genre = gets.to_i
 
-#Beta / DEGEULASSE
-print "Choose the first letter of the generated name"
-firstletter = gets.chomp
-print "Is the name female ? (y = 1 / n = 0)"
-genre = gets.to_i
+        name = Name.new()
 
-name = Name.new()
-
-continue = 1
-while continue == 1
-    final = name.nameGeneration(genre, firstletter)
-    name.clean
-    final = final.join
-    final = final.downcase
-    final = final.capitalize
-    puts "\n ["+final+"]"
-    puts "\n Continue ? (y = 1 / n = 0) \n"
-    continue = gets.to_i
+        continue = 1
+        while continue == 1
+            final = name.nameGeneration(genre, firstletter)
+            name.clean
+            final = final.join
+            final = final.downcase
+            final = final.capitalize
+            puts "\n ["+final+"]"
+            puts "\n Continue ? (y = 1 / n = 0) \n"
+            continue = gets.to_i
+    end
 end
 
